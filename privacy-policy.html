@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — HabitFine</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-void: #06080D;
+            --bg-card: rgba(16, 21, 32, 0.72);
+            --brand-red: #EF3B36;
+            --brand-red-light: #FF5D58;
+            --text-pure: #FFFFFF;
+            --text-main: #F1F5F9;
+            --text-muted: #8E9BAE;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg-void); color: var(--text-main); font-family: var(--font-main); line-height: 1.7; padding: 40px 20px; }
+        .container { max-width: 860px; margin: 0 auto; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 28px; padding: 48px 36px; backdrop-filter: blur(16px); }
+        .brand-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 36px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 24px; }
+        .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #fff; font-size: 20px; font-weight: 800; }
+        .brand img { width: 34px; height: 34px; border-radius: 8px; }
+        .brand span span { color: var(--brand-red-light); }
+        .back-btn { color: var(--text-muted); text-decoration: none; font-size: 14px; font-weight: 600; }
+        .back-btn:hover { color: #fff; }
+        h1 { font-size: 32px; font-weight: 800; color: var(--text-pure); margin-bottom: 8px; }
+        .updated-date { color: var(--brand-red-light); font-size: 13px; font-weight: 600; margin-bottom: 30px; }
+        h2 { font-size: 20px; color: var(--text-pure); margin: 28px 0 12px; }
+        p, li { color: var(--text-muted); font-size: 15px; margin-bottom: 14px; }
+        ul { padding-left: 20px; margin-bottom: 18px; }
+        .highlight-box { background: rgba(239, 59, 54, 0.08); border: 1px solid rgba(239, 59, 54, 0.25); border-radius: 16px; padding: 20px; margin: 24px 0; }
+        .highlight-box p { color: var(--text-main); margin-bottom: 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="brand-header">
+            <a href="index.html" class="brand">
+                <img src="images/icon.png" alt="HabitFine Logo" onerror="this.src='images/splash-icon.png'">
+                <span>Habit<span>Fine</span></span>
+            </a>
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </div>
+
+        <h1>Privacy Policy</h1>
+        <div class="updated-date">Last Updated: August 2026</div>
+
+        <div class="highlight-box">
+            <p><strong>Core Privacy Guarantee:</strong> HabitFine is built offline-first. Your habit logs, streaks, focus timer records, and virtual penalty calculations never leave your device unless you explicitly choose to backup to your private Google Drive.</p>
+        </div>
+
+        <h2>1. Information We Collect</h2>
+        <p>HabitFine collects minimal or zero personally identifiable information (PII):</p>
+        <ul>
+            <li><strong>Local Habit & Goal Data:</strong> Created routines, completion check-ins, focus minutes, and fine ledger details stored locally on your device storage.</li>
+            <li><strong>Audio Preferences & App Settings:</strong> Saved themes, sound choices, and timer intervals.</li>
+            <li><strong>Backups:</strong> If enabled, backup JSON files are saved to your personal Google Drive or local internal storage. We do not operate external database servers to read this data.</li>
+        </ul>
+
+        <h2>2. Virtual Fine System Disclaimer</h2>
+        <p>All fines, debt amounts, and penalties shown within the app are <strong>100% virtual</strong>. HabitFine does not automatically debit money from your bank account, credit card, or UPI. Fines are strictly psychological accountability mechanisms.</p>
+
+        <h2>3. Third-Party Services</h2>
+        <p>The app may use minimal third-party tools solely for stability:</p>
+        <ul>
+            <li>Google Play Billing Services (for voluntary lifetime/subscription upgrades).</li>
+            <li>Google Drive API (strictly for user-initiated cloud backup export and restore).</li>
+        </ul>
+
+        <h2>4. Data Deletion</h2>
+        <p>You have full control over your data. Clearing app storage or uninstalling the app permanently removes all your local records. You can also export or wipe data inside <em>Settings → Backup & Restore</em>.</p>
+
+        <h2>5. Contact Us</h2>
+        <p>If you have any questions regarding this Privacy Policy, reach out to us at <strong style="color:#fff;">support@habitfine.com</strong>.</p>
+    </div>
+</body>
+</html>
