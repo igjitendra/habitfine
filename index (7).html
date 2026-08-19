@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFine — Habit Tracker & Virtual Fine Jar | Track Habits. Build Better You.</title>
+    <meta name="description" content="Build unbreakable habits, track streaks, set virtual penalty fines for skipped routines, and stay laser-focused with Pomodoro & Retro Flip Clock.">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=JetBrains+Mono:wght@400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-void: #06080D;
+            --bg-dark: #0A0D15;
+            --bg-card: rgba(16, 21, 32, 0.72);
+            --bg-card-hover: rgba(26, 33, 50, 0.85);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(239, 59, 54, 0.4);
+            
+            /* Signature HabitFine Red Palette */
+            --brand-red: #EF3B36;
+            --brand-red-light: #FF5D58;
+            --brand-red-dark: #B31E19;
+            --brand-glow: rgba(239, 59, 54, 0.4);
+            --brand-glow-lg: rgba(239, 59, 54, 0.2);
+
+            /* Accents */
+            --amber-accent: #F59E0B;
+            --amber-glow: rgba(245, 158, 11, 0.35);
+            --emerald-accent: #10B981;
+            --emerald-glow: rgba(16, 185, 129, 0.3);
+            --cyan-accent: #06B6D4;
+            
+            --text-pure: #FFFFFF;
+            --text-main: #F1F5F9;
+            --text-muted: #8E9BAE;
+            --text-dim: #556275;
+            
+            --font-main: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-void);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+            selection-background-color: var(--brand-red);
+            selection-color: #fff;
+        }
+
+        ::selection {
+            background: var(--brand-red);
+            color: #fff;
+        }
+
+        /* Ambient Creative Grid & Particles */
+        .ambient-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at 50% 30%, black 20%, transparent 80%);
+        }
+
+        .glow-orb-primary {
+            position: fixed;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 650px;
+            background: radial-gradient(circle, rgba(239, 59, 54, 0.22) 0%, rgba(239, 59, 54, 0.06) 45%, rgba(6, 8, 13, 0) 75%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(40px);
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+        }
+
+        .glow-orb-secondary {
+            position: fixed;
+            bottom: 5%;
+            right: -150px;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, rgba(6, 8, 13, 0) 70%);
+            pointer-events: none;
+            z-index: 0;
+            filter: blur(50px);
+        }
+
+        @keyframes pulseGlow {
+            0% { transform: translateX(-50%) scale(1); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+        }
+
+        .container {
+            max-width: 1260px;
+            margin: 0 auto;
+            padding: 0 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Glass Floating Navigation */
+        header {
+            position: fixed;
+            top: 18px;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        .nav-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            pointer-events: auto;
+        }
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 68px;
+            padding: 0 24px;
+            background: rgba(12, 16, 26, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 99px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 59, 54, 0.1);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 21px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .brand-logo-wrap {
+            position: relative;
+            width: 38px;
+            height: 38px;
+        }
+        .brand-logo-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            object-fit: cover;
+            display: block;
+            box-shadow: 0 0 16px var(--brand-glow);
+        }
+        .brand-text-red {
+            color: var(--brand-red-light);
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+        }
+        .nav-links a:hover {
+            color: #FFFFFF;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--brand-red-light);
+            transition: width 0.25s;
+            border-radius: 2px;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-btn {
+            background: linear-gradient(135deg, var(--brand-red-light), var(--brand-red-dark));
+            color: #FFFFFF;
+            padding: 10px 22px;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px var(--brand-glow);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .nav-btn:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 8px 30px var(--brand-glow);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 170px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+        .hero-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 18px;
+            border-radius: 99px;
+            background: rgba(239, 59, 54, 0.1);
+            border: 1px solid rgba(239, 59, 54, 0.35);
+            color: var(--brand-red-light);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 25px rgba(239, 59, 54, 0.15);
+            animation: floatPill 4s ease-in-out infinite;
+        }
+        @keyframes floatPill {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--brand-red-light);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 10px var(--brand-red-light);
+            animation: blinkDot 1.5s infinite;
+        }
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.7); }
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 64px;
+            line-height: 1.1;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 18px;
+            max-width: 980px;
+            margin-left: auto;
+            margin-right: auto;
+            text-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+        .gradient-headline {
+            background: linear-gradient(135deg, #FFFFFF 30%, #FFA8A5 65%, var(--brand-red-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-tagline-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            color: #E2E8F0;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .hero-tagline-bar .accent-dash {
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--brand-red-light));
+        }
+        .hero-tagline-bar .accent-dash.right {
+            background: linear-gradient(to left, transparent, var(--brand-red-light));
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 720px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 18px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .btn-playstore-3d {
+            background: #FFFFFF;
+            color: #06080D;
+            padding: 16px 34px;
+            border-radius: 18px;
+            font-weight: 800;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-playstore-3d::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-playstore-3d:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 20px 45px rgba(255, 255, 255, 0.25), 0 0 35px var(--brand-glow);
+        }
+        .btn-interactive-outline {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: #FFFFFF;
+            padding: 16px 32px;
+            border-radius: 18px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-interactive-outline:hover {
+            background: rgba(239, 59, 54, 0.15);
+            border-color: var(--brand-red-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(239, 59, 54, 0.25);
+        }
+
+        /* 3D Dynamic Live Metric Pill Board */
+        .live-pills-row {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .hero-metric-chip {
+            background: rgba(16, 21, 32, 0.6);
+            border: 1px solid var(--border-subtle);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 99px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .hero-metric-chip strong {
+            color: var(--text-pure);
+            font-family: var(--font-mono);
+        }
+
+        /* ===================================================
+           HORIZON SHOWCASE: PRO FLOATING SLIDER ENGINE
+           =================================================== */
+        .horizon-showcase {
+            padding: 70px 0 110px;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .showcase-header {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 36px;
+        }
+        .showcase-tag {
+            color: var(--brand-red-light);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .showcase-title {
+            font-family: var(--font-display);
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1.2px;
+            margin-bottom: 14px;
+        }
+        .showcase-desc {
+            color: var(--text-muted);
+            font-size: 16px;
+        }
+
+        /* Floating Controller Deck */
+        .slider-deck {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+        .deck-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(22, 28, 44, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(12px);
+            user-select: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        .deck-btn:hover {
+            background: var(--brand-red);
+            border-color: var(--brand-red-light);
+            box-shadow: 0 0 25px var(--brand-glow);
+            transform: scale(1.12);
+        }
+        .deck-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            border-radius: 99px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            backdrop-filter: blur(10px);
+            letter-spacing: 0.3px;
+        }
+        .deck-hint .key-badge {
+            background: rgba(239, 59, 54, 0.2);
+            color: var(--brand-red-light);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        /* 3D Floating Carousel Track */
+        .cards-stream-wrapper {
+            position: relative;
+            width: 100%;
+        }
+        .stream-fade-left, .stream-fade-right {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 120px;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .stream-fade-left {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-void) 10%, transparent 100%);
+        }
+        .stream-fade-right {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-void) 10%, transparent 100%);
+        }
+
+        .cards-stream {
+            display: flex;
+            gap: 32px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 40px 60px 60px;
+            cursor: grab;
+            user-select: none;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .cards-stream::-webkit-scrollbar {
+            display: none;
+        }
+        .cards-stream:active {
+            cursor: grabbing;
+        }
+
+        /* Phone Glass Card */
+        .stream-card {
+            flex: 0 0 290px;
+            background: linear-gradient(165deg, rgba(28, 35, 54, 0.88), rgba(12, 16, 26, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 38px;
+            padding: 14px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            animation: dynamicBob 5.2s ease-in-out infinite;
+        }
+
+        .stream-card:nth-child(even) {
+            animation-duration: 6s;
+            animation-delay: -2.2s;
+        }
+        .stream-card:nth-child(3n) {
+            animation-duration: 5.8s;
+            animation-delay: -3.8s;
+        }
+
+        @keyframes dynamicBob {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-16px) rotate(0.6deg); }
+        }
+
+        .stream-card:hover {
+            transform: translateY(-24px) scale(1.05) !important;
+            border-color: var(--brand-red-light);
+            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.9), 0 0 40px var(--brand-glow);
+            z-index: 10;
+        }
+
+        .screen-glass-frame {
+            border-radius: 28px;
+            overflow: hidden;
+            background: #05070C;
+            aspect-ratio: 9/19.2;
+            margin-bottom: 16px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .screen-glass-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+            transition: transform 0.4s ease;
+        }
+        .stream-card:hover .screen-glass-frame img {
+            transform: scale(1.02);
+        }
+
+        .card-screen-index {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(9, 12, 18, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: var(--brand-red-light);
+            font-size: 11px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-family: var(--font-mono);
+            letter-spacing: 0.5px;
+        }
+
+        .card-info-box {
+            text-align: center;
+            padding: 4px 8px 10px;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-pure);
+            margin-bottom: 4px;
+            letter-spacing: -0.2px;
+        }
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        /* ===================================================
+           BENTO GRID FEATURES SECTION
+           =================================================== */
+        .features-section {
+            padding: 80px 0;
+            position: relative;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: minmax(240px, auto);
+            gap: 24px;
+            margin-top: 40px;
+        }
+        .bento-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 30px;
+            padding: 36px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .bento-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(239, 59, 54, 0.4);
+            background: var(--bg-card-hover);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(239, 59, 54, 0.15);
+        }
+        
+        /* Span variations for Bento Layout */
+        .bento-span-2 {
+            grid-column: span 2;
+        }
+        .bento-card-bg-glow {
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--brand-glow) 0%, transparent 70%);
+            pointer-events: none;
+            filter: blur(30px);
+        }
+        
+        .bento-icon-sphere {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sphere-red { background: rgba(239, 59, 54, 0.15); color: var(--brand-red-light); box-shadow: 0 0 25px rgba(239, 59, 54, 0.2); }
+        .sphere-amber { background: rgba(245, 158, 11, 0.15); color: var(--amber-accent); box-shadow: 0 0 25px var(--amber-glow); }
+        .sphere-emerald { background: rgba(16, 185, 129, 0.15); color: var(--emerald-accent); box-shadow: 0 0 25px var(--emerald-glow); }
+        .sphere-cyan { background: rgba(6, 182, 212, 0.15); color: var(--cyan-accent); }
+
+        .bento-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            color: var(--text-pure);
+        }
+        .bento-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* ===================================================
+           INTERACTIVE DISCIPLINE & FINE DEBT CALCULATOR
+           =================================================== */
+        .calculator-zone {
+            margin: 90px 0;
+            background: linear-gradient(170deg, rgba(22, 28, 44, 0.9), rgba(10, 13, 21, 0.96));
+            border: 1px solid rgba(239, 59, 54, 0.35);
+            border-radius: 36px;
+            padding: 56px 44px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 45px rgba(239, 59, 54, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        .calc-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 50px;
+            align-items: center;
+        }
+        .calc-control-group {
+            margin-bottom: 22px;
+        }
+        .calc-control-group label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+        .calc-select, .calc-number {
+            width: 100%;
+            background: #080B12;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 16px 20px;
+            color: #FFFFFF;
+            font-size: 16px;
+            font-family: var(--font-main);
+            outline: none;
+            transition: all 0.2s;
+        }
+        .calc-select:focus, .calc-number:focus {
+            border-color: var(--brand-red-light);
+            box-shadow: 0 0 20px var(--brand-glow);
+        }
+        .custom-range {
+            width: 100%;
+            accent-color: var(--brand-red);
+            margin-top: 10px;
+            cursor: pointer;
+            height: 6px;
+        }
+        
+        .fine-display-vault {
+            background: radial-gradient(circle at 50% 50%, rgba(239, 59, 54, 0.12) 0%, rgba(12, 16, 26, 0.95) 100%);
+            border: 2px dashed rgba(239, 59, 54, 0.45);
+            border-radius: 28px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+        .vault-tag {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .vault-amount {
+            font-size: 64px;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: var(--brand-red-light);
+            margin: 12px 0;
+            text-shadow: 0 0 30px rgba(239, 59, 54, 0.4);
+        }
+        .oath-pill {
+            background: rgba(239, 59, 54, 0.15);
+            border: 1px solid rgba(239, 59, 54, 0.35);
+            color: var(--brand-red-light);
+            font-weight: 800;
+            padding: 8px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            display: inline-block;
+            margin-top: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===================================================
+           PRICING TIERS
+           =================================================== */
+        .pricing-section {
+            padding: 80px 0;
+        }
+        .pricing-deck {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            margin-top: 50px;
+        }
+        .tier-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 32px;
+            padding: 40px;
+            position: relative;
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .tier-card.featured-tier {
+            border-color: var(--brand-red);
+            background: linear-gradient(175deg, rgba(38, 20, 26, 0.95), rgba(14, 18, 28, 0.98));
+            box-shadow: 0 25px 60px rgba(239, 59, 54, 0.25);
+            transform: scale(1.04);
+        }
+        .tier-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--brand-red-light), var(--brand-red-dark));
+            color: #FFFFFF;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 5px 20px;
+            border-radius: 99px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px var(--brand-glow);
+        }
+        .tier-title {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .tier-cost {
+            font-size: 46px;
+            font-weight: 800;
+            font-family: var(--font-mono);
+            color: #FFFFFF;
+            margin-bottom: 24px;
+        }
+        .tier-cost span {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .tier-perks {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+        .tier-perks li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+        .check-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--emerald-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+        }
+        .promo-highlight {
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--emerald-accent);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .btn-tier {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            border-radius: 16px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: all 0.25s;
+        }
+        .btn-tier-featured {
+            background: var(--brand-red);
+            color: #FFFFFF;
+            box-shadow: 0 4px 20px var(--brand-glow);
+        }
+        .btn-tier-featured:hover {
+            background: var(--brand-red-light);
+            box-shadow: 0 8px 30px var(--brand-glow);
+            transform: translateY(-2px);
+        }
+        .btn-tier-subtle {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: #FFFFFF;
+        }
+        .btn-tier-subtle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #FFFFFF;
+        }
+
+        /* ===================================================
+           FAQ ACCORDION
+           =================================================== */
+        .faq-container {
+            max-width: 820px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .faq-tile {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-head {
+            padding: 22px 28px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-pure);
+        }
+        .faq-body {
+            padding: 0 28px 24px;
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+            display: none;
+        }
+        .faq-tile.active {
+            border-color: rgba(239, 59, 54, 0.5);
+            background: rgba(26, 33, 50, 0.9);
+        }
+        .faq-tile.active .faq-body {
+            display: block;
+        }
+        .faq-icon {
+            font-size: 22px;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--brand-red-light);
+        }
+        .faq-tile.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        /* Big Creative Download Finale */
+        .finale-banner {
+            background: linear-gradient(145deg, #182030 0%, #0B0E16 100%);
+            border: 1px solid rgba(239, 59, 54, 0.4);
+            border-radius: 40px;
+            padding: 80px 40px;
+            text-align: center;
+            margin: 110px 0 70px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 90px rgba(0,0,0,0.8), 0 0 50px rgba(239, 59, 54, 0.15);
+        }
+        .finale-logo-box {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 24px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px var(--brand-glow);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+        }
+        .finale-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .finale-banner h2 {
+            font-family: var(--font-display);
+            font-size: 46px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 14px;
+        }
+        .finale-tagline {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--brand-red-light);
+            margin-bottom: 12px;
+        }
+        .finale-banner p {
+            color: var(--text-muted);
+            font-size: 17px;
+            max-width: 620px;
+            margin: 0 auto 36px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 60px 0 40px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+        .footer-nav {
+            display: flex;
+            gap: 28px;
+        }
+        .footer-nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .footer-nav a:hover {
+            color: var(--brand-red-light);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 48px; }
+            .bento-grid, .pricing-deck { grid-template-columns: repeat(2, 1fr); }
+            .bento-span-2 { grid-column: span 2; }
+            .calc-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 36px; }
+            .bento-grid, .pricing-deck { grid-template-columns: 1fr; }
+            .bento-span-2 { grid-column: span 1; }
+            .stream-card { flex: 0 0 250px; }
+            .cards-stream { padding: 30px 20px; }
+            .stream-fade-left, .stream-fade-right { display: none; }
+            .calculator-zone { padding: 36px 24px; }
+            .vault-amount { font-size: 48px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Grid & Glowing Orbs -->
+    <div class="ambient-grid"></div>
+    <div class="glow-orb-primary"></div>
+    <div class="glow-orb-secondary"></div>
+
+    <!-- Floating Navigation Bar -->
+    <header>
+        <div class="nav-wrapper">
+            <div class="nav-inner">
+                <a href="#" class="brand">
+                    <div class="brand-logo-wrap">
+                        <img src="icon.png" alt="HabitFine Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <span>Habit<span class="brand-text-red">Fine</span></span>
+                </a>
+                <nav class="nav-links">
+                    <a href="#screens">App Tour</a>
+                    <a href="#features">Features</a>
+                    <a href="#calculator">Fine Vault</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#faq">FAQ</a>
+                </nav>
+                <a href="#download" class="nav-btn">
+                    <span>Get HabitFine</span>
+                    ➔
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-pill">
+                <span class="live-dot"></span>
+                <span>#1 Habit & Virtual Penalty Fine Tracker</span>
+            </div>
+            
+            <h1>Turn Lazy Excuses Into <span class="gradient-headline">Unbreakable Streaks</span></h1>
+            
+            <div class="hero-tagline-bar">
+                <span class="accent-dash"></span>
+                <span>Track Habits. Build Better You.</span>
+                <span class="accent-dash right"></span>
+            </div>
+
+            <p>Conquer procrastination with psychological accountability. Skip a routine? Pay a virtual fine. Stay locked in deep work with the Retro Flip Clock & Pomodoro soundscapes.</p>
+
+            <div class="hero-cta-group">
+                <a href="#download" class="btn-playstore-3d">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.07 2.07 0 0 1-.61-1.46V3.274c0-.568.225-1.096.61-1.46zm11.603 11.604l2.583 2.583-11.83 6.655 9.247-9.238zm0-2.836L5.965 1.345 17.795 8l-2.583 2.582zm1.414 1.414l3.18-1.789a1.678 1.678 0 0 0 0-2.99l-3.18-1.789-2.122 2.122 2.122 2.446z"/></svg>
+                    <span>Download on Google Play</span>
+                </a>
+                <a href="#calculator" class="btn-interactive-outline">
+                    <span>⚡ Try Fine Calculator</span>
+                </a>
+            </div>
+
+            <!-- Live Stats Chips -->
+            <div class="live-pills-row">
+                <div class="hero-metric-chip">🔥 <strong>3.4x</strong> Higher Consistency</div>
+                <div class="hero-metric-chip">🔒 <strong>100%</strong> Private & Offline</div>
+                <div class="hero-metric-chip">🎧 <strong>5+</strong> Ambient Soundscapes</div>
+                <div class="hero-metric-chip">🏆 <strong>35+</strong> XP Badges</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================
+         FLOATING HORIZONTAL SCREENSHOTS STREAM (AUTO-SLIDE + DRAG)
+         ========================================================== -->
+    <section id="screens" class="horizon-showcase">
+        <div class="container">
+            <div class="showcase-header">
+                <div class="showcase-tag">✦ Visual Experience ✦</div>
+                <h2 class="showcase-title">Explore HabitFine In Action</h2>
+                <p class="showcase-desc">Cards glide automatically across the screen. Swipe with touch, drag with mouse, or tap controls to tour all 10 modules.</p>
+            </div>
+
+            <!-- Slider Control Deck -->
+            <div class="slider-deck">
+                <button class="deck-btn" id="streamPrevBtn" aria-label="Slide Left">❮</button>
+                <div class="deck-hint">
+                    <span>👈 Swipe or Drag Cards 👉</span>
+                    <span class="key-badge">10 Screens</span>
+                </div>
+                <button class="deck-btn" id="streamNextBtn" aria-label="Slide Right">❯</button>
+            </div>
+        </div>
+
+        <!-- 3D Card Stream with Edge Glow Fade -->
+        <div class="cards-stream-wrapper">
+            <div class="stream-fade-left"></div>
+            <div class="stream-fade-right"></div>
+
+            <div class="cards-stream" id="cardsStream">
+                <!-- Screen 01 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">01 / 10</span>
+                        <img src="sc1.jpg" alt="Home Dashboard" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">Home Dashboard</div>
+                        <div class="card-subtitle">Daily Habits, Streaks & 1-Tap Check-in</div>
+                    </div>
+                </div>
+
+                <!-- Screen 02 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">02 / 10</span>
+                        <img src="sc2.jpg" alt="Pomodoro Hub" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">Pomodoro Focus Hub</div>
+                        <div class="card-subtitle">Ambient Loops & 4-7-8 Breathing Breaks</div>
+                    </div>
+                </div>
+
+                <!-- Screen 03 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">03 / 10</span>
+                        <img src="sc3.jpg" alt="Retro Flip Clock" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">Retro Flip Clock</div>
+                        <div class="card-subtitle">3D Split Flaps & Realistic Ticking Audio</div>
+                    </div>
+                </div>
+
+                <!-- Screen 04 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">04 / 10</span>
+                        <img src="sc4.jpg" alt="Fine Vault Ledger" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">Fine Vault & Ledger</div>
+                        <div class="card-subtitle">Virtual Debt & Settle Discipline Modal</div>
+                    </div>
+                </div>
+
+                <!-- Screen 05 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">05 / 10</span>
+                        <img src="sc5.jpg" alt="Consistency Heatmap" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">Consistency Heatmap</div>
+                        <div class="card-subtitle">12-Week GitHub Grid & Habit Analytics</div>
+                    </div>
+                </div>
+
+                <!-- Screen 06 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">06 / 10</span>
+                        <img src="sc6.jpg" alt="XP Ranks & Trophies" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">XP Ranks & Trophies</div>
+                        <div class="card-subtitle">35+ Unlockable Gamified Badges</div>
+                    </div>
+                </div>
+
+                <!-- Screen 07 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">07 / 10</span>
+                        <img src="sc7.jpg" alt="Social Share Cards" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">Social Share Cards</div>
+                        <div class="card-subtitle">5 Sleek Aesthetic Story Templates</div>
+                    </div>
+                </div>
+
+                <!-- Screen 08 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">08 / 10</span>
+                        <img src="sc8.jpg" alt="Plus Subscription" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">HabitFine Plus</div>
+                        <div class="card-subtitle">Promo 'TRYYEAR' & Lifetime Pass</div>
+                    </div>
+                </div>
+
+                <!-- Screen 09 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">09 / 10</span>
+                        <img src="sc9.jpg" alt="Sound Studio" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">Audio Studio Jukebox</div>
+                        <div class="card-subtitle">27 Sound FX, Fanfares & Haptics</div>
+                    </div>
+                </div>
+
+                <!-- Screen 10 -->
+                <div class="stream-card">
+                    <div class="screen-glass-frame">
+                        <span class="card-screen-index">10 / 10</span>
+                        <img src="sc10.jpg" alt="Onboarding Flow" onerror="this.onerror=null; this.src='splash-icon.png';">
+                    </div>
+                    <div class="card-info-box">
+                        <div class="card-title">7-Step Onboarding</div>
+                        <div class="card-subtitle">Tiger Mascot & Strictness Config</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================
+         BENTO GRID FEATURE SHOWCASE
+         ========================================================== -->
+    <section id="features" class="features-section container">
+        <div class="showcase-header">
+            <div class="showcase-tag">✦ Engineered For Winners ✦</div>
+            <h2 class="showcase-title">More Than A Tracker. A Discipline Engine.</h2>
+            <p class="showcase-desc">Designed with behavioral economics, high-focus productivity tools, and military-grade offline privacy.</p>
+        </div>
+
+        <div class="bento-grid">
+            <!-- Bento 1: Virtual Fine Jar (Span 2) -->
+            <div class="bento-card bento-span-2">
+                <div class="bento-card-bg-glow"></div>
+                <div>
+                    <div class="bento-icon-sphere sphere-red">💸</div>
+                    <h3>Virtual Fine Vault & Penalty Ledger</h3>
+                    <p>Financial psychology works. Whenever you miss a habit, HabitFine automatically levies your designated penalty amount. Fines stay in your debt ledger until you write a proof note or swear the oath: <strong>'I PROMISE DISCIPLINE'</strong>.</p>
+                </div>
+            </div>
+
+            <!-- Bento 2: Pomodoro Focus -->
+            <div class="bento-card">
+                <div>
+                    <div class="bento-icon-sphere sphere-amber">⏱️</div>
+                    <h3>Pomodoro + Streak Linker</h3>
+                    <p>Deep work focus timer with 4-7-8 breathing recovery. Completed minutes automatically boost your habit streak!</p>
+                </div>
+            </div>
+
+            <!-- Bento 3: Retro Flip Clock -->
+            <div class="bento-card">
+                <div>
+                    <div class="bento-icon-sphere sphere-cyan">⏳</div>
+                    <h3>Retro Desk Flip Clock</h3>
+                    <p>Turn your phone into a gorgeous study-desk clock with realistic 3D split cards and ambient ticking soundscapes.</p>
+                </div>
+            </div>
+
+            <!-- Bento 4: GitHub Heatmap (Span 2) -->
+            <div class="bento-card bento-span-2">
+                <div>
+                    <div class="bento-icon-sphere sphere-emerald">📊</div>
+                    <h3>12-Week Consistency Heatmap</h3>
+                    <p>Visualize your progress like a software developer. The 12-week GitHub-style consistency grid shows streaks, recovery patterns, and weekly intensity clusters at a glance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================
+         INTERACTIVE FINE DEBT CALCULATOR
+         ========================================================== -->
+    <section id="calculator" class="container">
+        <div class="calculator-zone">
+            <div class="calc-grid">
+                <div>
+                    <div class="showcase-tag">✦ Psychological Accountability ✦</div>
+                    <h2 style="font-family:var(--font-display); font-size:36px; font-weight:800; margin-bottom:12px;">What Is The Cost Of Inaction?</h2>
+                    <p style="color:var(--text-muted); font-size:15px; margin-bottom:28px;">Research shows having a real consequence increases habit adherence by over 300%. Estimate your monthly virtual fine below:</p>
+
+                    <div class="calc-control-group">
+                        <label>
+                            <span>Penalty Amount Per Missed Day</span>
+                            <span style="color:var(--brand-red-light); font-family:var(--font-mono); font-weight:800;" id="rateDisplay">₹50</span>
+                        </label>
+                        <input type="number" id="finePerDay" class="calc-number" value="50" min="10" max="1000" oninput="calculateFine()">
+                    </div>
+
+                    <div class="calc-control-group">
+                        <label>
+                            <span>Estimated Missed Days Per Month</span>
+                            <span style="color:var(--brand-red-light); font-family:var(--font-mono); font-weight:800;" id="daysDisplay">4 Days</span>
+                        </label>
+                        <input type="range" id="missedDays" class="custom-range" min="1" max="25" value="4" oninput="updateDays(this.value)">
+                    </div>
+
+                    <div class="calc-control-group">
+                        <label><span>Target Habit</span></label>
+                        <select id="habitSelect" class="calc-select" onchange="calculateFine()">
+                            <option value="Morning Gym Workout">Morning Gym Workout</option>
+                            <option value="2 Hours Coding Practice">2 Hours Coding Practice</option>
+                            <option value="Read 20 Pages of Book">Read 20 Pages of Book</option>
+                            <option value="No Junk Food Diet">No Junk Food Diet</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="fine-display-vault">
+                    <div class="vault-tag">ESTIMATED VIRTUAL DEBT</div>
+                    <div class="vault-amount" id="totalFineResult">₹200</div>
+                    <p style="color:var(--text-muted); font-size:14px;" id="calcSummary">Skipping <strong id="habitName" style="color:#fff;">Morning Gym Workout</strong> 4 times adds ₹200 virtual guilt!</p>
+                    <div class="oath-pill">⚠️ Penalty Oath: Type 'I PROMISE DISCIPLINE'</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================
+         PRICING SECTION
+         ========================================================== -->
+    <section id="pricing" class="pricing-section container">
+        <div class="showcase-header">
+            <div class="showcase-tag">✦ Simple & Honest ✦</div>
+            <h2 class="showcase-title">Invest in Unstoppable Self-Discipline</h2>
+            <p class="showcase-desc">Use promo code <strong>TRYYEAR</strong> inside the app to unlock 1-Year of HabitFine Plus completely free!</p>
+        </div>
+
+        <div class="pricing-deck">
+            <!-- Monthly -->
+            <div class="tier-card">
+                <div>
+                    <div class="tier-title">Monthly Pass</div>
+                    <div class="tier-cost">₹21 <span>/ month</span></div>
+                    <ul class="tier-perks">
+                        <li><span class="check-dot">✓</span> Unlimited Habits & Fine Jar</li>
+                        <li><span class="check-dot">✓</span> Pomodoro & Ambient Loops</li>
+                        <li><span class="check-dot">✓</span> Retro Landscape Flip Clock</li>
+                    </ul>
+                </div>
+                <a href="#download" class="btn-tier btn-tier-subtle">Choose Monthly</a>
+            </div>
+
+            <!-- 1-Year Featured -->
+            <div class="tier-card featured-tier">
+                <div class="tier-badge">Most Popular</div>
+                <div>
+                    <div class="tier-title">1-Year Pass</div>
+                    <div class="tier-cost">₹99 <span>/ year</span></div>
+                    <div class="promo-highlight">🎉 Code: <strong>TRYYEAR</strong> for 1 Year Free!</div>
+                    <ul class="tier-perks">
+                        <li><span class="check-dot">✓</span> All HabitFine Plus Features</li>
+                        <li><span class="check-dot">✓</span> 12-Week Consistency Heatmaps</li>
+                        <li><span class="check-dot">✓</span> 35+ XP Trophies & Social Cards</li>
+                        <li><span class="check-dot">✓</span> Private Google Drive Sync</li>
+                    </ul>
+                </div>
+                <a href="#download" class="btn-tier btn-tier-featured">Claim 1-Year Pass</a>
+            </div>
+
+            <!-- Lifetime -->
+            <div class="tier-card">
+                <div>
+                    <div class="tier-title">Lifetime Pass</div>
+                    <div class="tier-cost">₹249 <span>one-time</span></div>
+                    <ul class="tier-perks">
+                        <li><span class="check-dot">✓</span> Forever Access to All Updates</li>
+                        <li><span class="check-dot">✓</span> VIP Sound FX Jukebox Studio</li>
+                        <li><span class="check-dot">✓</span> Zero Subscriptions Ever</li>
+                    </ul>
+                </div>
+                <a href="#download" class="btn-tier btn-tier-subtle">Get Lifetime Pass</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================
+         FAQ ACCORDION
+         ========================================================== -->
+    <section id="faq" class="container" style="padding: 60px 0;">
+        <div class="showcase-header">
+            <div class="showcase-tag">✦ Answers Ready ✦</div>
+            <h2 class="showcase-title">Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-tile active">
+                <div class="faq-head" onclick="toggleFaq(this)">
+                    <span>How does the Virtual Fine Vault work?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-body">
+                    Whenever you miss a scheduled habit, HabitFine automatically calculates your penalty and adds it to your virtual Fine Vault. The money stays in your debt ledger until you write a proof note or pledge accountability by typing "I PROMISE DISCIPLINE".
+                </div>
+            </div>
+
+            <div class="faq-tile">
+                <div class="faq-head" onclick="toggleFaq(this)">
+                    <span>Does HabitFine work without an internet connection?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-body">
+                    Yes! HabitFine is 100% offline-first. All your habits, timers, heatmaps, and notes stay safely on your phone. You can export a JSON backup anytime or sync with Google Drive.
+                </div>
+            </div>
+
+            <div class="faq-tile">
+                <div class="faq-head" onclick="toggleFaq(this)">
+                    <span>How do I redeem the 'TRYYEAR' promo code?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-body">
+                    Open HabitFine, navigate to the Plus screen, type code <strong>TRYYEAR</strong> into the promo box, and hit Redeem. You will instantly get 1 year of HabitFine Plus unlocked with zero payment!
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================
+         FINALE CALL TO ACTION BANNER
+         ========================================================== -->
+    <section id="download" class="container">
+        <div class="finale-banner">
+            <div class="finale-logo-box">
+                <img src="icon.png" alt="HabitFine App Icon" onerror="this.onerror=null; this.src='splash-icon.png';">
+            </div>
+            <h2>Ready To Build Unbreakable Habits?</h2>
+            <div class="finale-tagline">— Track Habits. Build Better You. —</div>
+            <p>Download HabitFine today and take complete ownership of your daily routines, time, and focus.</p>
+            <a href="https://play.google.com/store/apps/details?id=com.habitfine.app" target="_blank" class="btn-playstore-3d">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a2.07 2.07 0 0 1-.61-1.46V3.274c0-.568.225-1.096.61-1.46zm11.603 11.604l2.583 2.583-11.83 6.655 9.247-9.238zm0-2.836L5.965 1.345 17.795 8l-2.583 2.582zm1.414 1.414l3.18-1.789a1.678 1.678 0 0 0 0-2.99l-3.18-1.789-2.122 2.122 2.122 2.446z"/></svg>
+                <span>Get HabitFine on Google Play</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-grid">
+            <div class="brand">
+                <img src="icon.png" alt="HabitFine Icon" style="width:30px; height:30px; border-radius:8px;" onerror="this.onerror=null; this.src='splash-icon.png';">
+                <span>Habit<span class="brand-text-red">Fine</span></span>
+            </div>
+            <div class="footer-nav">
+                <a href="#screens">Screenshots</a>
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="privacy-policy.html">Privacy Policy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+            <div style="font-size:13px; color:var(--text-dim);">
+                © 2026 HabitFine App. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // ==========================================
+        // AUTO-SLIDE STREAM & DRAG CONTROLLER
+        // ==========================================
+        const stream = document.getElementById('cardsStream');
+        const prevBtn = document.getElementById('streamPrevBtn');
+        const nextBtn = document.getElementById('streamNextBtn');
+
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let autoScrollTimer = null;
+        let userInteracting = false;
+
+        function startStreamAutoScroll() {
+            autoScrollTimer = setInterval(() => {
+                if (!userInteracting) {
+                    const max = stream.scrollWidth - stream.clientWidth;
+                    if (stream.scrollLeft >= max - 8) {
+                        stream.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        stream.scrollBy({ left: 320, behavior: 'smooth' });
+                    }
+                }
+            }, 2800);
+        }
+
+        function pauseScroll() {
+            userInteracting = true;
+            clearInterval(autoScrollTimer);
+        }
+
+        function resumeScroll() {
+            userInteracting = false;
+            clearInterval(autoScrollTimer);
+            startStreamAutoScroll();
+        }
+
+        // Buttons
+        prevBtn.addEventListener('click', () => {
+            pauseScroll();
+            stream.scrollBy({ left: -320, behavior: 'smooth' });
+            setTimeout(resumeScroll, 4000);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            pauseScroll();
+            stream.scrollBy({ left: 320, behavior: 'smooth' });
+            setTimeout(resumeScroll, 4000);
+        });
+
+        // Mouse Drag
+        stream.addEventListener('mousedown', (e) => {
+            isDown = true;
+            pauseScroll();
+            startX = e.pageX - stream.offsetLeft;
+            scrollLeft = stream.scrollLeft;
+        });
+
+        stream.addEventListener('mouseleave', () => {
+            if (isDown) {
+                isDown = false;
+                resumeScroll();
+            }
+        });
+
+        stream.addEventListener('mouseup', () => {
+            if (isDown) {
+                isDown = false;
+                setTimeout(resumeScroll, 3000);
+            }
+        });
+
+        stream.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - stream.offsetLeft;
+            const walk = (x - startX) * 1.8;
+            stream.scrollLeft = scrollLeft - walk;
+        });
+
+        // Mobile Touch
+        stream.addEventListener('touchstart', () => pauseScroll(), { passive: true });
+        stream.addEventListener('touchend', () => setTimeout(resumeScroll, 3000), { passive: true });
+        stream.addEventListener('mouseenter', pauseScroll);
+        stream.addEventListener('mouseleave', () => {
+            if (!isDown) resumeScroll();
+        });
+
+        startStreamAutoScroll();
+
+        // ==========================================
+        // Fine Calculator
+        // ==========================================
+        function calculateFine() {
+            const finePerDay = parseInt(document.getElementById('finePerDay').value) || 0;
+            const missedDays = parseInt(document.getElementById('missedDays').value) || 0;
+            const habit = document.getElementById('habitSelect').value;
+
+            document.getElementById('rateDisplay').innerText = '₹' + finePerDay;
+            const total = finePerDay * missedDays;
+            document.getElementById('totalFineResult').innerText = '₹' + total.toLocaleString('en-IN');
+            document.getElementById('habitName').innerText = habit;
+            document.getElementById('calcSummary').innerHTML = `Skipping <strong style="color:#fff;">${habit}</strong> ${missedDays} times adds ₹${total} virtual guilt!`;
+        }
+
+        function updateDays(val) {
+            document.getElementById('daysDisplay').innerText = val + ' Days';
+            calculateFine();
+        }
+
+        // FAQ Toggle
+        function toggleFaq(el) {
+            const parent = el.parentElement;
+            parent.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
