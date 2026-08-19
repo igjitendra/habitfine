@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HabitFine — Habit Tracker & Virtual Fine Jar | Track Habits. Build Better You.</title>
     <meta name="description" content="Build unbreakable habits, track streaks, set virtual penalty fines for skipped routines, and stay laser-focused with Pomodoro & Retro Flip Clock.">
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/png" href="images/icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,700&family=JetBrains+Mono:wght@400;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -56,8 +56,6 @@
             font-family: var(--font-main);
             overflow-x: hidden;
             line-height: 1.6;
-            selection-background-color: var(--brand-red);
-            selection-color: #fff;
         }
 
         ::selection {
@@ -334,17 +332,6 @@
             position: relative;
             overflow: hidden;
         }
-        .btn-playstore-3d::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
         .btn-playstore-3d:hover {
             transform: translateY(-4px) scale(1.03);
             box-shadow: 0 20px 45px rgba(255, 255, 255, 0.25), 0 0 35px var(--brand-glow);
@@ -371,7 +358,7 @@
             box-shadow: 0 10px 30px rgba(239, 59, 54, 0.25);
         }
 
-        /* 3D Dynamic Live Metric Pill Board */
+        /* Metric Chips */
         .live-pills-row {
             display: flex;
             justify-content: center;
@@ -398,9 +385,7 @@
             font-family: var(--font-mono);
         }
 
-        /* ===================================================
-           HORIZON SHOWCASE: PRO FLOATING SLIDER ENGINE
-           =================================================== */
+        /* Horizontal Carousel Section */
         .horizon-showcase {
             padding: 70px 0 110px;
             position: relative;
@@ -436,7 +421,6 @@
             font-size: 16px;
         }
 
-        /* Floating Controller Deck */
         .slider-deck {
             display: flex;
             justify-content: center;
@@ -490,7 +474,6 @@
             font-size: 11px;
         }
 
-        /* 3D Floating Carousel Track */
         .cards-stream-wrapper {
             position: relative;
             width: 100%;
@@ -530,7 +513,6 @@
             cursor: grabbing;
         }
 
-        /* Phone Glass Card */
         .stream-card {
             flex: 0 0 290px;
             background: linear-gradient(165deg, rgba(28, 35, 54, 0.88), rgba(12, 16, 26, 0.95));
@@ -622,9 +604,7 @@
             font-weight: 500;
         }
 
-        /* ===================================================
-           BENTO GRID FEATURES SECTION
-           =================================================== */
+        /* Bento Grid */
         .features-section {
             padding: 80px 0;
             position: relative;
@@ -656,7 +636,6 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(239, 59, 54, 0.15);
         }
         
-        /* Span variations for Bento Layout */
         .bento-span-2 {
             grid-column: span 2;
         }
@@ -701,9 +680,7 @@
             line-height: 1.6;
         }
 
-        /* ===================================================
-           INTERACTIVE DISCIPLINE & FINE DEBT CALCULATOR
-           =================================================== */
+        /* Calculator Section */
         .calculator-zone {
             margin: 90px 0;
             background: linear-gradient(170deg, rgba(22, 28, 44, 0.9), rgba(10, 13, 21, 0.96));
@@ -791,9 +768,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* ===================================================
-           PRICING TIERS
-           =================================================== */
+        /* Pricing */
         .pricing-section {
             padding: 80px 0;
         }
@@ -919,9 +894,7 @@
             border-color: #FFFFFF;
         }
 
-        /* ===================================================
-           FAQ ACCORDION
-           =================================================== */
+        /* FAQ */
         .faq-container {
             max-width: 820px;
             margin: 40px auto 0;
@@ -969,7 +942,7 @@
             transform: rotate(45deg);
         }
 
-        /* Big Creative Download Finale */
+        /* Finale Banner */
         .finale-banner {
             background: linear-gradient(145deg, #182030 0%, #0B0E16 100%);
             border: 1px solid rgba(239, 59, 54, 0.4);
@@ -1043,7 +1016,6 @@
             color: var(--brand-red-light);
         }
 
-        /* Responsive Breakpoints */
         @media (max-width: 1024px) {
             .hero h1 { font-size: 48px; }
             .bento-grid, .pricing-deck { grid-template-columns: repeat(2, 1fr); }
@@ -1076,7 +1048,7 @@
             <div class="nav-inner">
                 <a href="#" class="brand">
                     <div class="brand-logo-wrap">
-                        <img src="icon.png" alt="HabitFine Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/icon.png" alt="HabitFine Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <span>Habit<span class="brand-text-red">Fine</span></span>
                 </a>
@@ -1165,7 +1137,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">01 / 10</span>
-                        <img src="sc1.jpg" alt="Home Dashboard" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc1.png" alt="Home Dashboard" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">Home Dashboard</div>
@@ -1177,7 +1149,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">02 / 10</span>
-                        <img src="sc2.jpg" alt="Pomodoro Hub" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc2.png" alt="Pomodoro Hub" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">Pomodoro Focus Hub</div>
@@ -1189,7 +1161,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">03 / 10</span>
-                        <img src="sc3.jpg" alt="Retro Flip Clock" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc3.png" alt="Retro Flip Clock" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">Retro Flip Clock</div>
@@ -1201,7 +1173,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">04 / 10</span>
-                        <img src="sc4.jpg" alt="Fine Vault Ledger" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc4.png" alt="Fine Vault Ledger" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">Fine Vault & Ledger</div>
@@ -1213,7 +1185,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">05 / 10</span>
-                        <img src="sc5.jpg" alt="Consistency Heatmap" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc5.png" alt="Consistency Heatmap" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">Consistency Heatmap</div>
@@ -1225,7 +1197,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">06 / 10</span>
-                        <img src="sc6.jpg" alt="XP Ranks & Trophies" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc6.png" alt="XP Ranks & Trophies" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">XP Ranks & Trophies</div>
@@ -1237,7 +1209,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">07 / 10</span>
-                        <img src="sc7.jpg" alt="Social Share Cards" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc7.png" alt="Social Share Cards" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">Social Share Cards</div>
@@ -1249,7 +1221,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">08 / 10</span>
-                        <img src="sc8.jpg" alt="Plus Subscription" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc8.png" alt="Plus Subscription" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">HabitFine Plus</div>
@@ -1261,7 +1233,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">09 / 10</span>
-                        <img src="sc9.jpg" alt="Sound Studio" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc9.png" alt="Sound Studio" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">Audio Studio Jukebox</div>
@@ -1273,7 +1245,7 @@
                 <div class="stream-card">
                     <div class="screen-glass-frame">
                         <span class="card-screen-index">10 / 10</span>
-                        <img src="sc10.jpg" alt="Onboarding Flow" onerror="this.onerror=null; this.src='splash-icon.png';">
+                        <img src="images/sc10.png" alt="Onboarding Flow" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                     </div>
                     <div class="card-info-box">
                         <div class="card-title">7-Step Onboarding</div>
@@ -1284,9 +1256,7 @@
         </div>
     </section>
 
-    <!-- ==========================================================
-         BENTO GRID FEATURE SHOWCASE
-         ========================================================== -->
+    <!-- Bento Grid Features -->
     <section id="features" class="features-section container">
         <div class="showcase-header">
             <div class="showcase-tag">✦ Engineered For Winners ✦</div>
@@ -1295,7 +1265,6 @@
         </div>
 
         <div class="bento-grid">
-            <!-- Bento 1: Virtual Fine Jar (Span 2) -->
             <div class="bento-card bento-span-2">
                 <div class="bento-card-bg-glow"></div>
                 <div>
@@ -1305,7 +1274,6 @@
                 </div>
             </div>
 
-            <!-- Bento 2: Pomodoro Focus -->
             <div class="bento-card">
                 <div>
                     <div class="bento-icon-sphere sphere-amber">⏱️</div>
@@ -1314,7 +1282,6 @@
                 </div>
             </div>
 
-            <!-- Bento 3: Retro Flip Clock -->
             <div class="bento-card">
                 <div>
                     <div class="bento-icon-sphere sphere-cyan">⏳</div>
@@ -1323,7 +1290,6 @@
                 </div>
             </div>
 
-            <!-- Bento 4: GitHub Heatmap (Span 2) -->
             <div class="bento-card bento-span-2">
                 <div>
                     <div class="bento-icon-sphere sphere-emerald">📊</div>
@@ -1334,9 +1300,7 @@
         </div>
     </section>
 
-    <!-- ==========================================================
-         INTERACTIVE FINE DEBT CALCULATOR
-         ========================================================== -->
+    <!-- Fine Calculator -->
     <section id="calculator" class="container">
         <div class="calculator-zone">
             <div class="calc-grid">
@@ -1382,9 +1346,7 @@
         </div>
     </section>
 
-    <!-- ==========================================================
-         PRICING SECTION
-         ========================================================== -->
+    <!-- Pricing -->
     <section id="pricing" class="pricing-section container">
         <div class="showcase-header">
             <div class="showcase-tag">✦ Simple & Honest ✦</div>
@@ -1393,7 +1355,6 @@
         </div>
 
         <div class="pricing-deck">
-            <!-- Monthly -->
             <div class="tier-card">
                 <div>
                     <div class="tier-title">Monthly Pass</div>
@@ -1407,7 +1368,6 @@
                 <a href="#download" class="btn-tier btn-tier-subtle">Choose Monthly</a>
             </div>
 
-            <!-- 1-Year Featured -->
             <div class="tier-card featured-tier">
                 <div class="tier-badge">Most Popular</div>
                 <div>
@@ -1424,7 +1384,6 @@
                 <a href="#download" class="btn-tier btn-tier-featured">Claim 1-Year Pass</a>
             </div>
 
-            <!-- Lifetime -->
             <div class="tier-card">
                 <div>
                     <div class="tier-title">Lifetime Pass</div>
@@ -1440,9 +1399,7 @@
         </div>
     </section>
 
-    <!-- ==========================================================
-         FAQ ACCORDION
-         ========================================================== -->
+    <!-- FAQ -->
     <section id="faq" class="container" style="padding: 60px 0;">
         <div class="showcase-header">
             <div class="showcase-tag">✦ Answers Ready ✦</div>
@@ -1482,13 +1439,11 @@
         </div>
     </section>
 
-    <!-- ==========================================================
-         FINALE CALL TO ACTION BANNER
-         ========================================================== -->
+    <!-- CTA Finale -->
     <section id="download" class="container">
         <div class="finale-banner">
             <div class="finale-logo-box">
-                <img src="icon.png" alt="HabitFine App Icon" onerror="this.onerror=null; this.src='splash-icon.png';">
+                <img src="images/icon.png" alt="HabitFine App Icon" onerror="this.onerror=null; this.src='images/splash-icon.png';">
             </div>
             <h2>Ready To Build Unbreakable Habits?</h2>
             <div class="finale-tagline">— Track Habits. Build Better You. —</div>
@@ -1504,7 +1459,7 @@
     <footer>
         <div class="container footer-grid">
             <div class="brand">
-                <img src="icon.png" alt="HabitFine Icon" style="width:30px; height:30px; border-radius:8px;" onerror="this.onerror=null; this.src='splash-icon.png';">
+                <img src="images/icon.png" alt="HabitFine Icon" style="width:30px; height:30px; border-radius:8px;" onerror="this.onerror=null; this.src='images/splash-icon.png';">
                 <span>Habit<span class="brand-text-red">Fine</span></span>
             </div>
             <div class="footer-nav">
@@ -1522,9 +1477,7 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // ==========================================
-        // AUTO-SLIDE STREAM & DRAG CONTROLLER
-        // ==========================================
+        // Auto-Slide & Touch-Drag Stream Controller
         const stream = document.getElementById('cardsStream');
         const prevBtn = document.getElementById('streamPrevBtn');
         const nextBtn = document.getElementById('streamNextBtn');
@@ -1559,7 +1512,6 @@
             startStreamAutoScroll();
         }
 
-        // Buttons
         prevBtn.addEventListener('click', () => {
             pauseScroll();
             stream.scrollBy({ left: -320, behavior: 'smooth' });
@@ -1572,7 +1524,6 @@
             setTimeout(resumeScroll, 4000);
         });
 
-        // Mouse Drag
         stream.addEventListener('mousedown', (e) => {
             isDown = true;
             pauseScroll();
@@ -1602,7 +1553,6 @@
             stream.scrollLeft = scrollLeft - walk;
         });
 
-        // Mobile Touch
         stream.addEventListener('touchstart', () => pauseScroll(), { passive: true });
         stream.addEventListener('touchend', () => setTimeout(resumeScroll, 3000), { passive: true });
         stream.addEventListener('mouseenter', pauseScroll);
@@ -1612,9 +1562,7 @@
 
         startStreamAutoScroll();
 
-        // ==========================================
-        // Fine Calculator
-        // ==========================================
+        // Calculator
         function calculateFine() {
             const finePerDay = parseInt(document.getElementById('finePerDay').value) || 0;
             const missedDays = parseInt(document.getElementById('missedDays').value) || 0;
@@ -1632,7 +1580,6 @@
             calculateFine();
         }
 
-        // FAQ Toggle
         function toggleFaq(el) {
             const parent = el.parentElement;
             parent.classList.toggle('active');
